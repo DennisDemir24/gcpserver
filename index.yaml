@@ -1,7 +1,8 @@
+indexes:
 - kind: customers
   properties:
-  - name: name
-  - name: uid
   - name: age
   - name: company
+  - name: name
   - name: title
+  - name: uid
