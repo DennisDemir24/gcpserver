@@ -1,0 +1,7 @@
+- kind: customers
+  properties:
+  - name: name
+  - name: uid
+  - name: age
+  - name: company
+  - name: title
