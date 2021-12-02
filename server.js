@@ -8,8 +8,7 @@ const CUSTOMERS = 'customers'
 
 // Get customers
 app.get('/getCustomers', (req, res) => {
-  const query = datastore.createQuery(CUSTOMERS)
-  console.log(query)
+  const query = datastore.createQuery(CUSTOMERS).select(['name'])
   datastore
     .runQuery(query)
     .then((results) => {
@@ -36,7 +35,7 @@ app.get('/getCustomer/:id', (req, res) => {
     
 })
 
-app.get('/getCustomerswithproperty', (req, res) => {
+/* app.get('/getCustomerswithproperty', (req, res) => {
   const query = datastore.createQuery(CUSTOMERS).select(['name'])
     datastore
       .runQuery(query)
@@ -48,7 +47,7 @@ app.get('/getCustomerswithproperty', (req, res) => {
         console.error('ERROR:', err)
         res.status(500).send(err)
       })
-})
+}) */
 
 // Listen to the App Engine-specified port, or 8080 otherwise
 const PORT = process.env.PORT || 8080
