@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
-  args: ["run", "create-env"]
+  args: ["run"]
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy", "-v", "$_GAE_VERSION"]
 timeout: "1600s"
