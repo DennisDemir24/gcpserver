@@ -10,7 +10,7 @@ const CUSTOMERS = 'customers'
 app.get('/getCustomers', (req, res) => {
   const query = datastore
     .createQuery(CUSTOMERS)
-    .select(['name', 'id'])
+    .select(['name'])
   datastore
     .runQuery(query)
     .then((results) => {
