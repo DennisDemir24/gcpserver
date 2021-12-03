@@ -8,9 +8,7 @@ const CUSTOMERS = 'customers'
 
 // Get customer name and id
 app.get('/getCustomers', (req, res) => {
-  const query = datastore
-    .createQuery(CUSTOMERS)
-    .select(['name'])
+  const query = datastore.createQuery(CUSTOMERS)
   datastore
     .runQuery(query)
     .then((results) => {
@@ -24,18 +22,21 @@ app.get('/getCustomers', (req, res) => {
 })
 
 
-// Get customer by id
-app.get('/getCustomer/:id', (req, res) => {
-    let id = req.params.id
-    const key = datastore.key([CUSTOMERS, parseInt(id, 10)])
-    return datastore.get(key).then((results) => {
-      const customer = results[0]
-      if (!customer) {
-        return res.status(404).send('Customer not found')
-      }
-      res.send(customer)
+// Get customer by name
+app.get('/getCustomer/:name', (req, res) => {
+  const name = req.params.name
+  const query = datastore.createQuery(CUSTOMERS).filter('name', '=', name)
+  datastore
+    .runQuery(query)
+    .then((results) => {
+      const customers = results[0]
+      console.log(customers)
+      res.send(customers)
     })
-    
+    .catch((err) => {
+      console.error('ERROR:', err)
+      res.status(500).send(err)
+    })
 })
 
 // Listen to the App Engine-specified port, or 8080 otherwise

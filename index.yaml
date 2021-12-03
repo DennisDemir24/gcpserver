@@ -1,5 +1,6 @@
 indexes:
 - kind: customers
+  ancestor: no
   properties:
   - name: age
   - name: company
