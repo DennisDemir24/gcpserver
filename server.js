@@ -8,7 +8,7 @@ const CUSTOMERS = 'customers'
 
 // Get customer name and id
 app.get('/getCustomers', (req, res) => {
-  const query = datastore.createQuery(CUSTOMERS)
+  const query = datastore.createQuery(CUSTOMERS).select('name')
   datastore
     .runQuery(query)
     .then((results) => {
