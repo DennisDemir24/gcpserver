@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const ds = require('./datastore')
 const datastore = ds.datastore
 
-const CUSTOMERS = 'customers'
+app.use(cors())
 
+const CUSTOMERS = 'customers'
 
 // Get customer name and id
 app.get('/getCustomers', (req, res) => {
