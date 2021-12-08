@@ -8,14 +8,36 @@ app.use(cors())
 
 const CUSTOMERS = 'customers'
 
-// Get customer name and id
+// Get name and id of all customers
 app.get('/getCustomers', (req, res) => {
-  const query = datastore.createQuery(CUSTOMERS).select('name')
+  const query = datastore.createQuery(CUSTOMERS)
   datastore
     .runQuery(query)
     .then((results) => {
       const customers = results[0]
-      res.send(customers)
+      const customerNames = customers.map((customer) => {
+        return {
+          name: customer.name,
+          id: customer[datastore.KEY].id,
+        }
+      })
+      res.send(customerNames)
+    })
+    .catch((err) => {
+      console.error('ERROR:', err)
+      res.status(500).send(err)
+    })
+})
+
+
+// Get customer by id
+app.get('/getCustomer/:id', (req, res) => {
+  const customerId = req.params.id
+  const key = datastore.key([CUSTOMERS, parseInt(customerId, 10)])
+  datastore
+    .get(key)
+    .then((results) => {
+      res.send(results)
     })
     .catch((err) => {
       console.error('ERROR:', err)
@@ -25,7 +47,7 @@ app.get('/getCustomers', (req, res) => {
 
 
 // Get customer by name
-app.get('/getCustomer/:name', (req, res) => {
+/* app.get('/getCustomer/:name', (req, res) => {
   const name = req.params.name
   const query = datastore.createQuery(CUSTOMERS).filter('name', '=', name)
   datastore
@@ -39,7 +61,22 @@ app.get('/getCustomer/:name', (req, res) => {
       console.error('ERROR:', err)
       res.status(500).send(err)
     })
-})
+}) */
+
+/* // Get customer name and id
+app.get('/getCustomers', (req, res) => {
+  const query = datastore.createQuery(CUSTOMERS).select('name')
+  datastore
+    .runQuery(query)
+    .then((results) => {
+      const customers = results[0]
+      res.send(customers)
+    })
+    .catch((err) => {
+      console.error('ERROR:', err)
+      res.status(500).send(err)
+    })
+}) */
 
 // Listen to the App Engine-specified port, or 8080 otherwise
 const PORT = process.env.PORT || 8080
